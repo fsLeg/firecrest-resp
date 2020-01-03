@@ -2,7 +2,7 @@
 title: "{{ replace .TranslationBaseName "-" " " | title }}"
 type = "pages"
 omit_header_text = true
-menu = "main"
+menu = "pages"
 categories = ["pages"]
 unsafe = true
 summary = ""
