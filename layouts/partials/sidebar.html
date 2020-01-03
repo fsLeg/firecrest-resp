@@ -1,0 +1,72 @@
+{{with site.GetPage "/about.html"}}
+    <div class="info">
+        {{.Content}}
+    </div>
+{{end}}
+<div class="asides">
+
+    <!-- search box placeholder -->
+
+    <div id="page_list">
+        <h5>Pages</h5>
+        <ul>
+            {{range site.Menus.pages}}
+            <li>
+                <a href="{{.URL}}">{{.Name}}</a>
+            </li>
+            {{end}}
+        </ul>
+    </div>
+
+    <div id="tag_list">
+        <h5>Tags</h5>
+        <ul id="tags_list">
+            {{range $name, $taxonomy := first 10 site.Taxonomies.tags.ByCount}}
+                <li>
+                    <a href="{{.Page.RelPermalink}}">{{.Page.Title}}</a>
+                    <span class="sub">({{.Count}})</span>
+                </li>
+            {{end}}
+            <li><a href="/tags/">All&nbsp;&rarr;</a></li>
+        </ul>
+    </div>
+
+    <div id="archive_list">
+        <h5>Archives</h5>
+        {{$posts := slice}}{{/*initialize empty array*/}}
+        {{range site.RegularPages}}
+            {{if and (ne .Section "pages") (ne .Title "About")}}{{/*only display posts, not pages*/}}
+                {{$posts = $posts | append .}}
+            {{end}}
+        {{end}}
+        <ul>
+            {{range $posts.GroupByDate "2006"}}
+            <li>
+                <details>
+                    <summary>
+                        {{.Key}}
+                        <span class="sub">({{len .Pages}})</span>
+                    </summary>
+                    <ul>
+                        {{range .GroupByDate "January"}}
+                            <li>
+                                <details>
+                                    <summary>
+                                        {{.Key}}
+                                        <span class="sub">({{len .Pages}})</span>
+                                    </summary>
+                                    <ul>
+                                        {{range .Pages}}
+                                            <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+                                        {{end}}
+                                    </ul>
+                                </details>
+                            </li>
+                        {{end}}
+                    </ul>
+                </details>
+            </li>
+            {{end}}
+        </ul>
+    </div>
+</div>

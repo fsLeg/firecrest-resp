@@ -1,0 +1,9 @@
+{{ define "main" }}
+        {{ range $key, $value := .Data.Terms }}
+        {{$cnt := $value.Count}}
+        {{$size := add (mul (div (sub $cnt 1) 5.0) 25) 100}}
+                <a href="{{ "/" | relLangURL }}{{ $.Data.Plural | urlize }}/{{ $key | urlize }}" class="tags" style="font-size: {{$size}}%; margin: 0 2px;" title="{{$cnt}} post(s)">
+                    {{ $key }}
+                </a>
+        {{ end }}
+{{ end }}

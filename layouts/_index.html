@@ -1,0 +1,21 @@
+{{ define "main" }}
+    {{ range .Paginator.Pages }}
+<!-- Post -->
+<div class="post-container post-{{.Section}}">
+    <article class="post">
+        <!-- Post itself -->
+        <header>
+            <h2 class="title"><a href="{{.RelPermalink}}">{{.Title}}</a></h2>
+        </header>
+        {{.Summary}}
+        {{if .Truncated}}<p><a href="{{.RelPermalink}}">Read more...</a></p>{{end}}
+        <div class="clear"></div>
+        <!-- /Post itself -->
+    </article>
+</div>
+<!-- /Post -->
+    {{ end }}
+    <nav>
+        {{template "_internal/pagination.html" .}}
+    </nav>
+{{ end }}

@@ -1,0 +1,7 @@
+{{$file := .Page.Resources.Match "snippet*"}}
+{{with $file}}
+    {{range $file}}
+        <p class="code-title">{{.Title}}:</p>
+        {{highlight .Content $.Params.lang ""}}
+    {{end}}
+{{end}}

@@ -1,0 +1,17 @@
+{{ if or (.Paginator.HasPrev) (.Paginator.HasNext) }}
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {{ if .Paginator.HasPrev }}
+            <li class="page-item"><a href="{{ .RelPermalink }}" class="page-link"><i class="fas fa-angle-double-left"></i></a></li>
+            <li class="page-item"><a href="{{ .RelPermalink }}page/{{ .Paginator.Prev.PageNumber }}" class="page-link"><i class="fas fa-angle-left"></i></a></li>
+            <li class="page-item"><a href="{{ .RelPermalink }}page/{{ .Paginator.Prev.PageNumber }}" class="page-link">{{ .Paginator.Prev.PageNumber }}</a></li>
+        {{ end }}
+        <li class="page-item active"><span class="page-link">{{.Paginator.PageNumber}}</span></li>
+        {{ if .Paginator.HasNext }}
+            <li class="page-item"><a href="{{ .RelPermalink }}page/{{ .Paginator.Next.PageNumber }}" class="page-link">{{ .Paginator.Next.PageNumber }}</a></li>
+            <li class="page-item"><a href="{{ .RelPermalink }}page/{{ .Paginator.Next.PageNumber }}" class="page-link"><i class="fas fa-angle-right"></i></a></li>
+            <li class="page-item"><a href="{{ .RelPermalink }}page/{{ .Paginator.Last.PageNumber }}" class="page-link"><i class="fas fa-angle-double-right"></i></a></li>
+        {{ end }}
+    </ul>
+</nav>
+{{ end }}

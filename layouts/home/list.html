@@ -1,0 +1,100 @@
+{{define "additional_head"}}
+{{/* Dirty solution, but scopes... */}}
+    {{$addPlayer := 0}}
+    {{$addCode := 0}}
+    {{$addBox := 0}}
+    {{$posts := slice}}{{/*initialize empty array*/}}
+    {{range site.RegularPages}}
+        {{if and (ne .Section "pages") (ne .Title "About")}}{{/*only display posts, not pages*/}}
+            {{$posts = $posts | append .}}
+        {{end}}
+    {{end}}
+    {{range (.Paginate $posts).Pages}}
+        {{if or (eq .Section "audio" .) (eq .Section "video" .)}}
+            {{$addPlayer = add $addPlayer 1}}
+        {{else if (eq .Section "code" .)}}
+            {{$addCode = add $addCode 1}}
+        {{else if (eq .Section "photo" .)}}
+            {{$addBox = add $addBox 1}}
+        {{end}}
+    {{end}}
+    {{if $addPlayer}}
+        <link rel="stylesheet" type="text/css" href="/css/plyr.css">
+    {{end}}
+    {{if $addCode}}
+        <link rel="stylesheet" type="text/css" href="/css/syntax.css">
+    {{end}}
+    {{if $addBox}}
+        <link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.min.css">
+    {{end}}
+{{end}}
+{{define "main"}}
+        {{$posts := slice}}{{/*initialize empty array*/}}
+        {{range site.RegularPages}}
+            {{if and (ne .Section "pages") (ne .Title "About")}}{{/*only display posts, not pages*/}}
+                {{$posts = $posts | append .}}
+            {{end}}
+        {{end}}
+        {{range (.Paginate $posts).Pages}}
+            <!-- Post -->
+            <div class="post-container post-{{.Section}}">
+                <article class="post">
+                    <!-- Post itself -->
+                    <header>
+                        <h2 class="title"><a href="{{.RelPermalink}}">{{.Title}}</a></h2>
+                    </header>
+                    {{if (eq .Section "photo")}}
+                        {{partial "photo.html" .}}
+                    {{else if (eq .Section "video")}}
+                        {{partial "video.html" .}}
+                    {{else if (eq .Section "audio")}}
+                        {{partial "audio.html" .}}
+                    {{else if (eq .Section "link")}}
+                        {{partial "link.html" .}}
+                    {{end}}
+                    {{if not .Truncated}}
+                        {{.Content}}
+                    {{else if not (hasPrefix .Summary "<p")}}
+                        <p>{{.Summary}}</p>
+                    {{else}}
+                        {{.Summary}}
+                    {{end}}
+                    {{if .Truncated}}<p><a href="{{.RelPermalink}}">Read more...</a></p>{{end}}
+                    {{if (eq .Section "file")}}
+                        {{partial "file.html" .}}
+                    {{end}}
+                    <div class="clear"></div>
+                    <!-- /Post itself -->
+                    {{partial "post-metadata.html" .}}
+                </article>
+            </div>
+            <!-- /Post -->
+        {{end}}
+    <nav>
+        {{template "_internal/pagination.html" .}}
+    </nav>
+{{end}}
+{{define "additional_js"}}
+{{$addPlayer := 0}}
+{{$addBox := 0}}
+    {{$posts := slice}}{{/*initialize empty array*/}}
+    {{range site.RegularPages}}
+        {{if and (ne .Section "pages") (ne .Title "About")}}{{/*only display posts, not pages*/}}
+            {{$posts = $posts | append .}}
+        {{end}}
+    {{end}}
+    {{range (.Paginate $posts).Pages}}
+        {{if or (eq .Section "audio" .) (eq .Section "video" .)}}
+            {{$addPlayer = add $addPlayer 1}}
+        {{else if (eq .Section "photo" .)}}
+            {{$addBox = add $addBox 1}}
+        {{end}}
+    {{end}}
+    {{if $addPlayer}}
+        <script src="/js/plyr.min.js"></script>
+        <script>const player = new Plyr.setup('.player');</script>
+    {{end}}
+    {{if $addBox}}
+        <script src="/js/jquery.fancybox.min.js"></script>
+    {{end}}
+{{end}}

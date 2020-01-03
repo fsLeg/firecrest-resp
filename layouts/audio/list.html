@@ -1,0 +1,39 @@
+{{define "title"}}
+    {{.Title}} &ndash; {{.Site.Title}}
+{{end}}
+{{define "additional_head"}}
+    <link rel="stylesheet" type="text/css" href="/css/plyr.css">
+{{end}}
+{{ define "main" }}
+    {{ range .Paginator.Pages }}
+<!-- Post -->
+<div class="post-container post-{{.Section}}">
+    <article class="post">
+        <!-- Post itself -->
+        <header>
+            <h2 class="title"><a href="{{.RelPermalink}}">{{.Title}}</a></h2>
+        </header>
+        {{partial "audio.html" .}}
+        {{if not .Truncated}}
+            {{.Content}}
+        {{else if not (hasPrefix .Summary "<p")}}
+            <p>{{.Summary}}</p>
+        {{else}}
+            {{.Summary}}
+        {{end}}
+        {{if .Truncated}}<p><a href="{{.RelPermalink}}">Read more...</a></p>{{end}}
+        <div class="clear"></div>
+        <!-- /Post itself -->
+        {{partial "post-metadata.html" .}}
+    </article>
+</div>
+<!-- /Post -->
+    {{ end }}
+    <nav>
+        {{template "_internal/pagination.html" .}}
+    </nav>
+{{ end }}
+{{define "additional_js"}}
+    <script src="/js/plyr.min.js"></script>
+    <script>const player = new Plyr.setup('.player');</script>
+{{end}}

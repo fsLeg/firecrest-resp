@@ -1,0 +1,10 @@
+{{$file := .Page.Resources.Match "file*"}}
+<div class="file-container">
+    <ul>
+        {{range $file}}
+        <li>
+            <a class="file-link" href="{{.RelPermalink}}">{{.Title}}</a>
+        </li>
+        {{end}}
+    </ul>
+</div>

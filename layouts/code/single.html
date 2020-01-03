@@ -1,0 +1,24 @@
+{{define "title"}}
+    {{.Title}} &ndash; {{.Site.Title}}
+{{end}}
+{{define "additional_head"}}
+    <link rel="stylesheet" type="text/css" href="/css/syntax.css">
+{{end}}
+{{define "main"}}
+<!-- Post -->
+<div class="post-container post-{{.Section}}">
+    <article class="post">
+        <!-- Post itself -->
+        <header>
+            <h2 class="title">{{.Title}}</h2>
+        </header>
+        {{.Content}}
+        <hr>
+        {{partial "code.html" .}}
+        <div class="clear"></div>
+        <!-- /Post itself -->
+        {{partial "post-metadata.html" .}}
+    </article>
+</div>
+<!-- /Post -->
+{{ end }}

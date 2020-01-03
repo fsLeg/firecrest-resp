@@ -1,0 +1,29 @@
+{{ define "main" }}
+    {{ range .Paginator.Pages }}
+<!-- Post -->
+<div class="post-container post-{{.Section}}">
+    <article class="post">
+        <!-- Post itself -->
+        <header>
+            <h2 class="title"><a href="{{.RelPermalink}}">{{.Title}}</a></h2>
+        </header>
+        {{if not .Truncated}}
+            {{.Content}}
+        {{else if not (hasPrefix .Summary "<p")}}
+            <p>{{.Summary}}</p>
+        {{else}}
+            {{.Summary}}
+        {{end}}
+        {{if .Truncated}}<p><a href="{{.RelPermalink}}">Read more...</a></p>{{end}}
+        {{partial "file.html" .}}
+        <div class="clear"></div>
+        <!-- /Post itself -->
+        {{partial "post-metadata.html" .}}
+    </article>
+</div>
+<!-- /Post -->
+    {{ end }}
+    <nav>
+        {{template "_internal/pagination.html" .}}
+    </nav>
+{{ end }}

@@ -1,0 +1,8 @@
+{{$audio := false}}
+<div class="audio-container">
+    {{if .Page.Resources.GetMatch "audio"}}
+        {{$audio = .Page.Resources.GetMatch "audio"}}
+        <audio controls="controls" src="{{$audio.RelPermalink}}" class="player"></audio>
+    {{end}}
+</div>
+<hr>

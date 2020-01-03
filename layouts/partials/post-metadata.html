@@ -1,0 +1,19 @@
+<!-- Post metadata and controls -->
+<div class="meta">
+    <div class="date_comments">
+        <span class="date">
+            <i class="far fa-clock"></i>&nbsp;
+            <a href="{{.RelPermalink}}">{{.Date.Format "January 2, 2006"}}</a>
+        </span>
+    </div>
+    <div class="tags_link">
+        <span class="tags"><i class="fas fa-tags"></i>&nbsp;Tags: 
+        {{if .Params.tags}}
+            {{range sort .Params.tags}}<a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" rel="tag">{{.}}</a> {{end}}
+        {{end}}
+        </span>
+        <span class="float-right"><a href="{{.Permalink}}" class="permalink"><i class="fas fa-link"></i>&nbsp;Permalink</a></span>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- /Post  metadata and controls -->
