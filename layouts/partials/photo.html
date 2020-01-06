@@ -7,7 +7,7 @@
     {{end}}
     <br>
     {{if eq (len $image) 1}}
-        <a class="photo-source-link" href="{{.Params.image_source}}">{{.Params.image_title}}{{if .Params.artist}} by {{.Params.artist}}{{end}}</a>
+        <a class="photo-source-link"{{with .Params.image_source}} href="{{.}}"{{end}}>{{.Params.image_title}}{{if .Params.artist}} by {{.Params.artist}}{{end}}</a>
     {{else}}
         {{with .Params.image_source}}
             <a class="photo-source-link" href="{{.}}">Source</a>
