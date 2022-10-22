@@ -1,9 +1,10 @@
 {{$image := .Page.Resources.Match "image*"}}
+{{$page := .Page}}
 <p class="photo-container">
     {{range $image}}
         {{$thumb := false}}
         {{if eq (len $image) 1}}{{$thumb = .Fit "400x510"}}{{else}}{{$thumb = .Fit "250x500"}}{{end}}
-        <a class="photo-link" href="{{.RelPermalink}}" data-fancybox{{if gt (len $image) 1}}=".File.UniqueID"{{end}} data-caption="{{if eq (len $image) 1}}{{.Params.image_title}}{{else}}{{.Title}}{{end}}"><img class="image" src="{{$thumb.RelPermalink}}" alt="{{if eq (len $image) 1}}{{.Params.image_title}}{{else}}{{.Title}}{{end}}"></a>
+        <a class="photo-link" href="{{.RelPermalink}}" data-fancybox{{if gt (len $image) 1}}="{{$page.File.UniqueID}}"{{end}} data-caption="{{if eq (len $image) 1}}{{.Params.image_title}}{{else}}{{.Title}}{{end}}"><img class="image" src="{{$thumb.RelPermalink}}" alt="{{if eq (len $image) 1}}{{.Params.image_title}}{{else}}{{.Title}}{{end}}"></a>
     {{end}}
     <br>
     {{if eq (len $image) 1}}
