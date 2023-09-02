@@ -3,8 +3,21 @@
 <p class="photo-container">
     {{range $image}}
         {{$thumb := false}}
-        {{if eq (len $image) 1}}{{$thumb = .Fit "400x510"}}{{else}}{{$thumb = .Fit "250x500"}}{{end}}
-        <a class="photo-link" href="{{.RelPermalink}}" data-fancybox{{if gt (len $image) 1}}="{{$page.File.UniqueID}}"{{end}} data-caption="{{if eq (len $image) 1}}{{.Params.image_title}}{{else}}{{.Title}}{{end}}"><img class="image" src="{{$thumb.RelPermalink}}" alt="{{if eq (len $image) 1}}{{.Params.image_title}}{{else}}{{.Title}}{{end}}"></a>
+        {{$thumb_webp := false}}
+        {{if eq (len $image) 1}}
+            {{$thumb = .Fit "400x510"}}
+            {{$thumb_webp = .Fit "400x510 webp lanczos q85"}}
+        {{else}}
+            {{$thumb = .Fit "250x500"}}
+            {{$thumb_webp = .Fit "250x500 webp lanczos q85"}}
+        {{end}}
+        <a class="photo-link" href="{{.RelPermalink}}" data-fancybox{{if gt (len $image) 1}}="{{$page.File.UniqueID}}"{{end}} data-caption="{{if eq (len $image) 1}}{{.Params.image_title}}{{else}}{{.Title}}{{end}}">
+            <picture>
+                <source srcset="{{$thumb_webp.RelPermalink}}" type="image/webp">
+                <source srcset="{{$thumb.RelPermalink}}">
+                <img class="image" src="{{$thumb.RelPermalink}}" alt="{{if eq (len $image) 1}}{{.Params.image_title}}{{else}}{{.Title}}{{end}}">
+            </picture>
+        </a>
     {{end}}
     <br>
     {{if eq (len $image) 1}}
